@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC  "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"  
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	
+	<definition name="indexLogin" template="/WEB-INF/index.jsp">
+		<put-attribute name="title" value="indent" />
+	</definition>
+	
+	
+	<definition name="homePage" template="/WEB-INF/views/baseLayout.jsp">
+		<put-attribute name="title" value="HomePage" />
+		<put-attribute name="header" value="/WEB-INF/views/header.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/views/leftMenu.jsp"/> 
+		<put-attribute name="body"  value="/WEB-INF/views/indentCreate.jsp" />
+	</definition>
+	<!-- 
+	<definition name="indexHomeLayout" template="/WEB-INF/indexLayout.jsp">
+		<put-attribute name="title" value="HomePage" />
+		<put-attribute name="header" value="/WEB-INF/indexHeader.jsp" />
+		<put-attribute name="body"  value="/WEB-INF/indexContent.jsp" />
+	</definition>
+	 -->
+	<!--
+	<definition name="adminIndexView" template="/WEB-INF/views/administrator/administratorLayout.jsp">
+		<put-attribute name="title" value="Admin | HomePage" />
+		<put-attribute name="header" value="/WEB-INF/views/administrator/administratorHeader.jsp" />
+		<put-attribute name="body"  value="/WEB-INF/views/administrator/homePage.jsp" />
+	</definition>
+	 
+	 -->
+</tiles-definitions>
