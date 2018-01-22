@@ -86,6 +86,7 @@ public class MaterialDAOImpl implements MaterialDAO {
                 + "       IFNULL(material_master_taxgroup.price,0),\n"
                 + "       IFNULL(material_master_taxgroup.standardPrice,0),\n"
                 + "       IFNULL(craft_tax_price.output_tax,0),\n"
+                
                 + "       IFNULL(craft_tax_price.output_gst_tax,0),\n"
                 + "       craft_tax_price.hsn_code\n"
                 + "       FROM pos.vendor_master vendor_master\n"
