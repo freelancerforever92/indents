@@ -18,17 +18,20 @@
                             <div class="row">
 
                                 <div class="col-md-3">
-                                    <label class="required-red">Material </label>
+                                	<i class="fa fa-asterisk text-danger"></i>
+                                    <label>Material </label>
                                     <input type="text"  id="j_Material" name ="materialId" class="form-control tooltip-btn" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Material Id" required autocomplete="off" placeholder="material"/>
                                 </div>
 
                                 <div class="col-md-3">
-                                    <label class="required-red">Vendor</label>
+                                	<i class="fa fa-asterisk text-danger"></i>
+                                    <label>Vendor</label>
                                     <input type="text"  id="j_Vendor" name ="vendorID"  class="form-control tooltip-btn" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Vendor Id" required autocomplete="off" placeholder="vendor"/>
                                 </div>
 
                                 <div class="col-md-3">
-                                    <label class="required-red">Quantity</label>
+                                    <i class="fa fa-asterisk text-danger"></i>
+                                    <label>Quantity</label>
                                     <input type="text" id="j_Quantity" name ="J_quantity"  class="form-control tooltip-btn" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Quantity" required autocomplete="off" placeholder="quantity"/>
                                 </div>
 
@@ -170,13 +173,13 @@
         </div>
     </div>
 </div>
-<input type="text" id="hidden-indent-delete-row" />
+
 <!-- Modal Remove Confirmation -->
 <div class="md-modal md-effect-11" id="modal-11">
     <div class="md-content">
         <h3>Do you want to remove ?</h3>
         <div>
-            <input type="text" id="hidden-indent-delete-row" />
+            <input type="hidden" id="hidden-indent-delete-row" />
             <button class="md-close btn-lg btn-success" id="close-md-modal-effect">Okay</button>
         </div>
     </div>

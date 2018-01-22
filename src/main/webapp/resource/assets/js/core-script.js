@@ -246,19 +246,30 @@ function loadMaterialInfo(event) {
 						inSellingPrice = parseFloat(materialInfoArr[i].materialSellingPrice).toFixed(2);
 						inQuantity = parseFloat(materialInfoArr[i].quantity).toFixed(2);
 						inGrossValue = parseFloat(materialInfoArr[i].grossAmount).toFixed(2);
-						intGrandTotal = parseFloat(materialInfoArr[i].totalAmount).toFixed(2);
+						//intGrandTotal = parseFloat(materialInfoArr[i].totalAmount).toFixed(2);
 						inHsnCode = materialInfoArr[i].hsnCode;
+						var materialLineItms = new Array();
+						materialLineItms = materialInfoArr[i].beanList
+						intGrandTotal = materialLineItms[i].totalAmount;
+						intGrandTotal = intGrandTotal.toFixed(2);
 					}
-					rowColor = (indx % 2 === 0) ? ("success") : ("active");
-					dynamicRow = '<tr role="row" class="lite-text size12 ' + rowColor + '" id="' + keyCode + '"><td id="in-sno-' + indx + '">' + indx + ' </td><td class="sorting_1" tabindex="0" id="in-material-id-' + indx + '">' + inMaterialId + '</td><td id="in-material-description-' + indx + '"style="font-size:13px;">' + inMaterialDescription + '</td> <td id="in-material-vendor-id-' + indx + '">' + inVendorId + '</td><td id="in-material-vendor-name-' + indx + '" style="font-size:13px;">' + inVendorName + '</td><td id="in-material-quantity-' + indx + '">' + inQuantity + '</td><td id="in-material-stdprc-' + indx + '">' + inStandardPrice + '</td><td id="in-material-sellingprc-' + indx + '">' + inSellingPrice + '</td><td id="in-total-' + indx + '">' + inGrossValue + '</td><td><button class="md-trigger btn btn-icon btn-danger m-b-5 deleteItem" id="in-remove-' + keyCode + '"> <i class="fa fa-remove"></i> </button> </td></tr>';
-					$('#indent-content').append(dynamicRow).show('normal');
-					indx ++;
+					//indent-total-amount
+					if(intGrandTotal > 0 ){
+						rowColor = (indx % 2 === 0) ? ("success") : ("active");
+						dynamicRow = '<tr role="row" class="lite-text size12 ' + rowColor + '" id="' + keyCode + '"><td id="in-sno-' + indx + '">' + indx + ' </td><td class="sorting_1" tabindex="0" id="in-material-id-' + indx + '">' + inMaterialId + '</td><td id="in-material-description-' + indx + '"style="font-size:13px;">' + inMaterialDescription + '</td> <td id="in-material-vendor-id-' + indx + '">' + inVendorId + '</td><td id="in-material-vendor-name-' + indx + '" style="font-size:13px;">' + inVendorName + '</td><td id="in-material-quantity-' + indx + '">' + inQuantity + '</td><td id="in-material-stdprc-' + indx + '">' + inStandardPrice + '</td><td id="in-material-sellingprc-' + indx + '">' + inSellingPrice + '</td><td id="in-total-' + indx + '">' + inGrossValue + '</td><td><button class="md-trigger btn btn-icon btn-danger m-b-5 deleteItem" id="in-remove-' + keyCode + '"> <i class="fa fa-remove"></i> </button> </td></tr>';
+						$('#indent-content').append(dynamicRow).fadeIn("slow");
+						$("#indent-total-amount").text(intGrandTotal);
+						indx ++;
+					}else{
+						$('#infoModal').modal('show');
+						$('#modalLabel').text('Error !');
+						$('#infoMessage').text('Process failure,please try again !');
+					}
 				},
 				error : function(response) {
 					$('#infoModal').modal('show');
 					$('#modalLabel').text('Error !');
 					$('#infoMessage').text('Process failure,please try again !');
-					break;
 				}
 			});
 		}else{
@@ -294,6 +305,10 @@ $(document).on("click",this.$closeMdModal,function(ev) {
 	ev.preventDefault();
 	var deleteRowKey = $("#hidden-indent-delete-row").val().trim();
 	var deleteKeyLen = deleteRowKey.length;
+	
+	var rowColor = "";
+	var newDynamicRow = "";
+	
 	if (deleteKeyLen > 0) {
 		var deleteRowID = deleteRowKey.slice(10, deleteKeyLen);
 		if(deleteRowID !="" || deleteRowID != undefined && deleteRowID.length > 0 ){
@@ -306,14 +321,45 @@ $(document).on("click",this.$closeMdModal,function(ev) {
 							type : "POST",
 							url : "getItemsFromCart",
 							success : function(response){
+								$('#indent-content tr').remove();
+								var intentItms = new Array();
+								intentItms = response;
+								console.log(intentItms.length);
 								
+								if(intentItms.length > 0){
+									indx = 1; 
+									for(var i = 0;i < intentItms.length; i++){
+										console.log(intentItms[i].totalAmount);
+										//if(intentItms[i].keyCode != null){
+											//grandTotal = intentItms[i].totalAmount;
+											//grandTotal = grandTotal.toFixed(2);
+										//tot-indent-rows
+											rowColor = (indx % 2 === 0) ? ("success") : ("active");
+											newDynamicRow = '<tr role="row" class="lite-text size12 ' + rowColor + '" id="' + intentItms[i].keyCode + '"><td id="in-sno-' + indx + '">' + indx + ' </td><td class="sorting_1" tabindex="0" id="in-material-id-' + indx + '">' + intentItms[i].materialID + '</td><td id="in-material-description-' + indx + '"style="font-size:13px;">' + intentItms[i].materialDescription + '</td> <td id="in-material-vendor-id-' + indx + '">' + intentItms[i].vendorID + '</td><td id="in-material-vendor-name-' + indx + '" style="font-size:13px;">' + intentItms[i].vendorName + '</td><td id="in-material-quantity-' + indx + '">' + parseFloat(intentItms[i].quantity).toFixed(2) + '</td><td id="in-material-stdprc-' + indx + '">' + parseFloat(intentItms[i].materialStandardPrice).toFixed(2) + '</td><td id="in-material-sellingprc-' + indx + '">' + parseFloat(intentItms[i].materialSellingPrice).toFixed(2) + '</td><td id="in-total-' + indx + '">' + parseFloat(intentItms[i].grossAmount).toFixed(2) + '</td><td><button class="md-trigger btn btn-icon btn-danger m-b-5 deleteItem" id="in-remove-' + intentItms[i].keyCode + '"> <i class="fa fa-remove"></i> </button> </td></tr>';
+											$('#indent-content').append(newDynamicRow);
+											indx ++;
+										//}
+									}
+									$('#modal-11').modal('hide');
+									$('#modal-11').removeClass('md-show');
+									$("#indent-total-amount").text(grandTotal);
+								}else{
+									newDynamicRow = '<tr role="row" class="lite-text size12 ' + rowColor + ' "><td id="no-data-0" colspan="12"><h5>No Data</h5></td>  </tr>';
+									$('#indent-content').append(newDynamicRow);
+									$('#modal-11').modal('hide');
+									$('#modal-11').removeClass('md-show');
+								}
 							},error:function(response){
-								
+								$('#infoModal').modal('show');
+								$('#modalLabel').text('Error !');
+								$('#infoMessage').text('Process failure,please try again -0  !');
 							}
 						});
 					}
 				},error :function (response){
-					
+					$('#infoModal').modal('show');
+					$('#modalLabel').text('Error !');
+					$('#infoMessage').text('Process failure,please try again - 1 !');
 				}
 			});
 		}

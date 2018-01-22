@@ -19,6 +19,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.beans.MaterialInfoBean;
+import com.beans.MaterialInfoBeanLineItem;
 import com.models.CraftCounters;
 import com.models.MaterialMaster;
 import com.models.VendorMaster;
@@ -26,7 +27,7 @@ import com.persist.DAO.MaterialDAO;
 
 @Repository("MaterialDAO")
 public class MaterialDAOImpl implements MaterialDAO {
-	
+	Float grandTotal = 0.f;
 	static final Logger LOGGER = Logger.getLogger(MaterialDAOImpl.class);
 	
 	@Autowired
@@ -67,10 +68,13 @@ public class MaterialDAOImpl implements MaterialDAO {
 		}
 		return returnCode;
 	}
-	ArrayList<MaterialInfoBean> materialInfoLst = new ArrayList<MaterialInfoBean>();
+	
+	
+	ArrayList<MaterialInfoBean> headerItems = new ArrayList<MaterialInfoBean>();
+	ArrayList<MaterialInfoBeanLineItem> lineItems = new ArrayList<MaterialInfoBeanLineItem>();
 	@Transactional
 	public synchronized List<MaterialInfoBean> getMaterialInfo(MaterialMaster material,VendorMaster vendor,Float mQty,HttpSession httpSession){
-		Float grandTotal = 0.f;
+		
 		Session theSession = sessionFactory.getCurrentSession();
 		List<Object>materialInfoObj = new ArrayList<Object>();
 		int loggedEmpID = Integer.parseInt(httpSession.getAttribute("loggedEmpId").toString().trim());
@@ -93,11 +97,13 @@ public class MaterialDAOImpl implements MaterialDAO {
                 + "       AND (vendor_master.vendor_id = '" + vendor.getVendorID().trim() + "')";
 		materialInfoObj = theSession.createSQLQuery(materialInfoQry).list();
 		Iterator<?> iterator = materialInfoObj.iterator();
-		
+		headerItems.clear();
+		lineItems.clear();
 		if(itemToCart != null){
 			while(iterator.hasNext()) {
 				Object[] objectValue = (Object[]) iterator.next();
 				MaterialInfoBean materialInfo = new MaterialInfoBean();
+				MaterialInfoBeanLineItem lineItem = new MaterialInfoBeanLineItem();
 				materialInfo.setMaterialID(String.valueOf(objectValue[0]).trim());
 				materialInfo.setMaterialDescription(String.valueOf(objectValue[1]).trim());
 				materialInfo.setMaterialCraftGroup(String.valueOf(objectValue[2]).trim());
@@ -106,19 +112,23 @@ public class MaterialDAOImpl implements MaterialDAO {
 				materialInfo.setMaterialSellingPrice(Float.parseFloat(String.valueOf(objectValue[5]).trim()));
 				materialInfo.setQuantity(mQty);
 				Float gross = Float.parseFloat(String.valueOf(objectValue[5]).trim()) * mQty;
-				grandTotal = grandTotal + gross;
 				materialInfo.setGrossAmount(gross);
-				materialInfo.setTotalAmount(grandTotal);
+				grandTotal += gross;
+				System.out.println("TOT "+grandTotal);
+				//materialInfo.setTotalAmount(grandTotal);
+				lineItem.setTotalAmount(grandTotal);
+				lineItems.add(lineItem);
+				materialInfo.setBeanList(lineItems);
 				materialInfo.setMaterialStandardPrice(Float.parseFloat(String.valueOf(objectValue[6]).trim()));
 				materialInfo.setMaterialOutputTaxPer(Float.parseFloat(String.valueOf(objectValue[7]).trim()));
 				materialInfo.setMaterialCraftGSTPer(Float.parseFloat(String.valueOf(objectValue[8]).trim()));
 				materialInfo.setHsnCode(String.valueOf(objectValue[9]).trim());
 				materialInfo.setKeyCode(GetUUIDToken().trim());
-				materialInfoLst.add(materialInfo);
+				headerItems.add(materialInfo);
 			}
-			itemToCart.put(loggedEmpID, (ArrayList<MaterialInfoBean>) materialInfoLst);
+			itemToCart.put(loggedEmpID, (ArrayList<MaterialInfoBean>) headerItems);
 		}
-		return materialInfoLst;
+		return headerItems;
 	}
 	
 	@Transactional
@@ -147,21 +157,32 @@ public class MaterialDAOImpl implements MaterialDAO {
 	ArrayList<MaterialInfoBean> itemsFromMap = new ArrayList<MaterialInfoBean>();
 	@Transactional
 	public List<MaterialInfoBean> getItmsFrmCrt(HttpSession httpSession){
+		Float grandTotal = 0.f;
+		ArrayList<MaterialInfoBean> intentLstItms = new ArrayList<MaterialInfoBean>();
 		int loggedEmpID = Integer.parseInt(httpSession.getAttribute("loggedEmpId").toString().trim());
 		if(itemToCart != null){
+			intentLstItms.clear();
+			itemsFromMap.clear();
 			Iterator<Map.Entry<Integer,ArrayList<MaterialInfoBean>>> iter = itemToCart.entrySet().iterator();
 			while (iter.hasNext()) {
 	        	Map.Entry<Integer,ArrayList<MaterialInfoBean>> entry = iter.next();
+	        	MaterialInfoBean mBean = new MaterialInfoBean();
 	        	if(loggedEmpID == entry.getKey()){
-	        		ArrayList<MaterialInfoBean> list = entry.getValue();
-	        		itemsFromMap.addAll(list);
+	        		intentLstItms = entry.getValue();
+	        		System.out.println("LIST ITMS :: "+intentLstItms);
+	        		for(MaterialInfoBean bean : intentLstItms){
+	        			System.out.println(bean.getGrossAmount());
+	        			grandTotal += bean.getGrossAmount();
+	        			System.out.println("Grand Total :: "+grandTotal);
+	        		}
+	        		intentLstItms.add(mBean);
+	        		itemsFromMap.addAll(intentLstItms);
 	        	}
 			}
 			System.out.println("ITEM AFTER REMOVE :: "+itemsFromMap);
 		}
 		return itemsFromMap;
 	}
-	
 	
 	public String GetUUIDToken() {
         return UUID.randomUUID().toString();

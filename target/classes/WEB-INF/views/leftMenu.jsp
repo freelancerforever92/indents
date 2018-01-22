@@ -14,25 +14,45 @@
     <!-- right menu -->
     <nav class="navigation">
         <ul class="list-unstyled">
-            <li class=""><a href="#"><i class="fa fa-television text-info"></i> <span class="thin-text size16">Dashboard</span></a></li>
+            <li class=""><a href="#"><i class="fa fa-television "></i> <span class="thin-text size16">Dashboard</span></a></li>
             <li class="has-submenu">
                 <a href="#">
-                    <i class="fa fa-book text-info"></i> 
+                    <i class="fa fa-book "></i> 
                     <span class="lite-text size16">Indent</span>
                     <span class="badge bg-success" id="tot-indent-rows"></span>
                 </a>
                 <ul class="list-unstyled">
                     <li>
-                        <a href="indent" class="lite-text size14">
+                        <a href="createIndent" class="lite-text size14">
                             Create New
                         </a>
                     </li>
                     <li>
-                        <a href="createIndent" class="lite-text size14">
+                        <a href="manageIndent" class="lite-text size14">
                             Manage
                         </a>
                     </li>
                 </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#">
+                    <i class="fa fa-user "></i> 
+                    <span class="lite-text size16">Vendor</span>
+                </a>
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="#" class="lite-text size14">
+                            Manage
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            
+            <li class="has-submenu">
+                <a href="#">
+                    <i class="fa fa-cogs"></i> 
+                    <span class="lite-text size16">Settings</span>
+                </a>
             </li>
             <!--            
                <li class="has-submenu">
@@ -46,4 +66,5 @@
         </ul>
     </nav>
     <!-- right menu -->
+    
 </aside>

@@ -101,7 +101,6 @@ public class AppController {
 	public @ResponseBody int getProductCategoryName(@RequestParam String legacyNo){
 		int isInSession = 0;
 		String getStorageLocation = branchCounters.addCounterToSession(legacyNo);
-		
 		if(!(getStorageLocation.isEmpty())){
 			httpSession.setAttribute("storageLocation",getStorageLocation);
 			String storageLoc = httpSession.getAttribute("storageLocation").toString().trim();
@@ -112,6 +111,14 @@ public class AppController {
 			}
 		}
 		return isInSession;
+	}
+	
+	@RequestMapping(value="/createIndent")
+	public ModelAndView showCreateIndent(Model model){
+		model.addAttribute("counters", branchCounters.getCounters());
+		model.addAttribute("loggedUser", httpSession.getAttribute("loggedEmpFirstNameLastName").toString().trim());
+		loadingPage = "homePage";
+		return new ModelAndView(loadingPage);
 	}
 	
 	@RequestMapping(value="/materialValidate")
@@ -170,6 +177,7 @@ public class AppController {
 	List<MaterialInfoBean> itmsFrmCrt = null;
 	@RequestMapping(value="/getItemsFromCart")
 	public @ResponseBody List<MaterialInfoBean> getItmsFrmCrt(HttpSession httpSession){
+		itmsFrmCrt = new ArrayList<MaterialInfoBean>();
 		itmsFrmCrt = materialService.getItmsFrmCrt(httpSession);
 		return itmsFrmCrt;
 	}

@@ -1,5 +1,7 @@
 package com.beans;
 
+import java.util.List;
+
 public class MaterialInfoBean {
 
 	private String keyCode = null;
@@ -14,8 +16,10 @@ public class MaterialInfoBean {
     private Float materialOutputTaxPer = 0.f;
     private Float materialCraftGSTPer = 0.f;
     private Float grossAmount = 0.f;
-    private Float totalAmount = 0.f;
     private String hsnCode = null;
+    private List<MaterialInfoBeanLineItem> beanList;
+    
+    
 	public String getKeyCode() {
 		return keyCode;
 	}
@@ -88,17 +92,17 @@ public class MaterialInfoBean {
 	public void setGrossAmount(Float grossAmount) {
 		this.grossAmount = grossAmount;
 	}
-	public Float getTotalAmount() {
-		return totalAmount;
-	}
-	public void setTotalAmount(Float totalAmount) {
-		this.totalAmount = totalAmount;
-	}
 	public String getHsnCode() {
 		return hsnCode;
 	}
 	public void setHsnCode(String hsnCode) {
 		this.hsnCode = hsnCode;
+	}
+	public List<MaterialInfoBeanLineItem> getBeanList() {
+		return beanList;
+	}
+	public void setBeanList(List<MaterialInfoBeanLineItem> beanList) {
+		this.beanList = beanList;
 	}
 	@Override
 	public String toString() {
@@ -110,9 +114,10 @@ public class MaterialInfoBean {
 				+ ", materialSellingPrice=" + materialSellingPrice
 				+ ", materialOutputTaxPer=" + materialOutputTaxPer
 				+ ", materialCraftGSTPer=" + materialCraftGSTPer
-				+ ", grossAmount=" + grossAmount + ", totalAmount="
-				+ totalAmount + ", hsnCode=" + hsnCode + "]";
+				+ ", grossAmount=" + grossAmount + ", hsnCode=" + hsnCode
+				+ ", beanList=" + beanList + "]";
 	}
+	
 	
     
 }

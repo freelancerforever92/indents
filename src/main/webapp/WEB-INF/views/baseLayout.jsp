@@ -27,7 +27,7 @@
         <link rel="stylesheet" href="resource/assets/css/ionicons.min.css"/>
 
         <!--<link rel="stylesheet" href="css/sweet-alert.min.css"/>-->
-        <link rel="stylesheet" href="resource/assets/css/application-styles.css"/>
+        <link rel="stylesheet" href="resource/assets/css/application-style.css"/>
         <link rel="stylesheet" href="resource/assets/css/style-core.css"/>
 
 
@@ -70,7 +70,7 @@
     <script src="resource/assets/js/toggles.min.js"></script>
     <script src="resource/assets/js/jquery.app.js"></script>
     <script src="resource/assets/js/modalEffects.js"></script>
-    <script src="resource/assets/js/core-scripts.js"></script>
+    <script src="resource/assets/js/core-script.js"></script>
     <!--
     <script src="resource/assets/js/charts/chart.min.js"></script>
     <script src="resource/assets/js/charts/chartjs.init.js"></script>
