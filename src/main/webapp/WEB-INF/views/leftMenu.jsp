@@ -41,7 +41,7 @@
                 </a>
                 <ul class="list-unstyled">
                     <li>
-                        <a href="#" class="lite-text size14">
+                        <a href="vendors" class="lite-text size14">
                             Manage
                         </a>
                     </li>

@@ -14,6 +14,14 @@
 		<put-attribute name="menu" value="/WEB-INF/views/leftMenu.jsp"/> 
 		<put-attribute name="body"  value="/WEB-INF/views/indentCreate.jsp" />
 	</definition>
+	
+	<definition name="vendorsList" template="/WEB-INF/views/baseLayout.jsp">
+		<put-attribute name="title" value="Vendor Manage"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/header.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/views/leftMenu.jsp"/> 
+		<put-attribute name="body"  value="/WEB-INF/views/manageVendor.jsp" />
+	</definition>
+	
 	<!-- 
 	<definition name="indexHomeLayout" template="/WEB-INF/indexLayout.jsp">
 		<put-attribute name="title" value="HomePage" />

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.jws.WebParam.Mode;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -159,6 +160,16 @@ public class AppController {
 			isVendorValid = -1;		    // Vendor field is empty
 		}
 		return isVendorValid;
+	}
+	
+	// Loads view for managing Vendor Details
+	@RequestMapping(value="/vendors")
+	public ModelAndView manageVendor(Model model){
+		loadingPage = "vendorsList";
+		model.addAttribute("vndrLst",vendorService.getVendors());
+		model.addAttribute("counters", branchCounters.getCounters());
+		model.addAttribute("loggedUser", httpSession.getAttribute("loggedEmpFirstNameLastName").toString().trim());
+		return new ModelAndView(loadingPage);
 	}
 	
 	List<MaterialInfoBean> materialLst = null;

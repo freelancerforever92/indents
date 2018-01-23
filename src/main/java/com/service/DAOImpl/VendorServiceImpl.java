@@ -1,5 +1,7 @@
 package com.service.DAOImpl;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,11 @@ public class VendorServiceImpl implements VendorService {
 	@Autowired
 	VendorDAO vendorDAO;
 
+	@Transactional
+	public List<VendorMaster> getVendors(){
+		return vendorDAO.getVendors();
+	}
+	
 	@Transactional
 	public int isVendorExits(VendorMaster vendorMaster, HttpSession httpSession) {
 		return vendorDAO.isVendorExits(vendorMaster, httpSession);

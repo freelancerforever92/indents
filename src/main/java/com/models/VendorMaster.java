@@ -37,6 +37,7 @@ public class VendorMaster {
 	private String mobileNumber;
 	private String faxNumber;
 	private String emailAddress;
+	private Float creditLimit; // indentCreditLimit
 	private Date createdOn;
 	private Date updatedOn;
 	
@@ -200,6 +201,14 @@ public class VendorMaster {
 		this.emailAddress = emailAddress;
 	}
 	
+	@Column(name="INDENTCREDITLIMIT")
+	public Float getCreditLimit() {
+		return creditLimit;
+	}
+	public void setCreditLimit(Float creditLimit) {
+		this.creditLimit = creditLimit;
+	}
+	
 	@Column(name="CREATED_DATE_TIME")
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getCreatedOn() {
@@ -229,10 +238,9 @@ public class VendorMaster {
 				+ ", city=" + city + ", zipcode=" + zipcode + ", district="
 				+ district + ", state=" + state + ", telNumber=" + telNumber
 				+ ", mobileNumber=" + mobileNumber + ", faxNumber=" + faxNumber
-				+ ", emailAddress=" + emailAddress + ", createdOn=" + createdOn
-				+ ", updatedOn=" + updatedOn + "]";
+				+ ", emailAddress=" + emailAddress + ", creditLimit="
+				+ creditLimit + ", createdOn=" + createdOn + ", updatedOn="
+				+ updatedOn + "]";
 	}
-	
-	
-	
+		
 }

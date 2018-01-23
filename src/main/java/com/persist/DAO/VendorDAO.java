@@ -1,5 +1,7 @@
 package com.persist.DAO;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import com.models.CraftCounters;
@@ -9,6 +11,7 @@ import com.models.VendorMaster;
 
 public interface VendorDAO {
 
+	public List<VendorMaster> getVendors();
 	public int isVendorExits(VendorMaster vendorMaster,HttpSession httpSession);
 	public int isVendorMaterialMatch(MaterialMaster material,VendorMaster vendor,MaterialVendorMaster materialVendor,CraftCounters crafts,HttpSession httpSession);
 }

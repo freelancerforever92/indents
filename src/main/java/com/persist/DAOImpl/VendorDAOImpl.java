@@ -37,6 +37,15 @@ static final Logger LOGGER = Logger.getLogger(VendorDAOImpl.class);
 	private static List<String> craftGroupList = new ArrayList();
 
 	@Transactional
+	public List<VendorMaster> getVendors(){
+		Session theSession = sessionFactory.getCurrentSession();
+		Criteria criteria = theSession.createCriteria(VendorMaster.class);
+		List<VendorMaster> vendorsList = criteria.list();
+		return vendorsList;
+	}
+	
+	
+	@Transactional
 	public int isVendorExits(VendorMaster vendorMaster, HttpSession httpSession) {
 		Session theSession = sessionFactory.getCurrentSession();
 		Criteria criteria = theSession.createCriteria(VendorMaster.class);
